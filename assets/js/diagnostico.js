@@ -11,47 +11,51 @@ const SEGMENTOS = [
   { id: 'marca',   label: 'Marca · institución' },
 ];
 
-/* 4 bloques × 3 preguntas. Respuestas puntúan 0 · 50 · 100.
-   (BORRADOR — reemplazar por las preguntas finales de Sergio.) */
+/* 4 bloques × 4 preguntas = 16. Respuestas puntúan 0 · 50 · 100.
+   Todas keyed en positivo: "Sí / casi siempre" = más sistematizada. */
 const BLOQUES = [
   {
     id: 'procesos', nombre: 'Procesos',
-    hueco: 'El conocimiento vive en tu cabeza, no escrito.',
-    accion: 'Escribe UN proceso clave como checklist esta semana. Que otro pueda ejecutarlo sin ti.',
+    hueco: 'Tu operación vive en tu cabeza, no en un sistema.',
+    accion: 'Escribe UN proceso clave como checklist esta semana —por ejemplo, el cierre de un evento—. La prueba: que alguien más pueda ejecutarlo sin ti.',
     preguntas: [
-      '¿Podrías entregarle tu proceso a alguien nuevo sin explicárselo de viva voz?',
-      '¿Tienes tus tareas repetibles escritas como checklist o plantilla?',
-      '¿Cada proyecto se apoya en lo anterior, o reinventas la rueda cada vez?',
+      '¿Podrías entregarle tu operación a alguien nuevo con documentos, sin explicárselo todo de viva voz?',
+      '¿Tus tareas que se repiten (montaje, proveedores, cierre) están escritas como checklist o plantilla?',
+      '¿Cada proyecto nuevo se apoya en lo aprendido en el anterior, en vez de empezar de cero?',
+      'Cuando algo sale mal, ¿queda registrado para que no se vuelva a repetir?',
     ],
   },
   {
     id: 'numeros', nombre: 'Números',
-    hueco: 'No conoces tu margen real. "Clientes felices, finanzas en rojo."',
-    accion: 'Calcula el margen real de tu último trabajo: ingresos menos TODOS los costos. Sin adornos.',
+    hueco: 'No conoces tu margen real. Es el clásico "clientes felices, finanzas en rojo".',
+    accion: 'Toma tu último trabajo y saca el número real: ingresos menos TODOS los costos. Sin redondear a tu favor.',
     preguntas: [
-      '¿Sabes cuánto te dejó, en limpio, tu último evento o cliente?',
-      '¿Registras tus costos reales antes de poner un precio?',
-      '¿Puedes decir hoy si este mes vas ganando o perdiendo?',
+      '¿Sabes cuánto te dejó, en limpio, tu último evento o proyecto —después de TODOS los costos—?',
+      '¿Calculas tus costos reales antes de pasar un precio o una cotización?',
+      '¿Puedes decir hoy, sin adivinar, si este mes vas ganando o perdiendo?',
+      '¿Tienes separadas las cuentas del negocio de las tuyas personales?',
     ],
   },
   {
     id: 'demanda', nombre: 'Demanda',
-    hueco: 'Los clientes llegan por suerte, no por sistema.',
-    accion: 'Escribe de dónde salió cada cliente del último trimestre. Ahí está tu canal repetible.',
+    hueco: 'Tus clientes llegan por suerte, no por un canal que puedas repetir.',
+    accion: 'Lista de dónde salió cada cliente del último trimestre. El canal que más se repita es el que debes sistematizar.',
     preguntas: [
-      '¿De dónde salió tu último cliente? ¿Puedes repetirlo a voluntad?',
-      '¿Tienes una forma constante de generar prospectos, o esperas a que lleguen?',
-      '¿Haces seguimiento a los interesados que no cerraron?',
+      '¿Sabes de dónde salió tu último cliente y podrías repetir ese camino a voluntad?',
+      '¿Tienes una forma constante de conseguir prospectos, en vez de esperar a que lleguen?',
+      '¿Le haces seguimiento a los interesados que no cerraron de una?',
+      '¿Puedes predecir, más o menos, cuántos clientes vas a tener el próximo mes?',
     ],
   },
   {
     id: 'dependencia', nombre: 'Dependencia',
-    hueco: 'La operación no existe sin ti.',
-    accion: 'Elige una tarea que solo tú haces y documéntala para delegarla. Empieza por la más frecuente.',
+    hueco: 'La operación no existe sin ti: eres el cuello de botella.',
+    accion: 'Elige la tarea que solo tú haces y más se repite. Documéntala para poder delegarla.',
     preguntas: [
-      'Si te enfermas mañana, ¿tu operación sigue funcionando?',
-      '¿Hay decisiones del día a día que alguien más pueda tomar sin ti?',
-      '¿Podrías tomarte una semana sin que todo se detenga?',
+      'Si te enfermas mañana, ¿tu operación sigue funcionando sin ti?',
+      '¿Hay decisiones del día a día que tu equipo puede tomar sin consultarte?',
+      '¿Podrías tomarte una semana por fuera sin que todo se detenga?',
+      'Si un proveedor o persona clave te falla, ¿tienes con quién reemplazarlo rápido?',
     ],
   },
 ];
@@ -63,9 +67,9 @@ const RESPUESTAS = [
 ];
 
 const NIVELES = [
-  { min: 0,  max: 40,  titulo: 'Todo depende de ti.',      texto: 'Tu operación eres tú. Funciona por tu esfuerzo, no por un sistema — y eso tiene techo.' },
-  { min: 41, max: 70,  titulo: 'Sistema a medias.',        texto: 'Tienes piezas montadas, pero hay huecos que te siguen costando tiempo, margen o clientes.' },
-  { min: 71, max: 100, titulo: 'Operación sistematizada.', texto: 'Vas bien. Aquí la conversación es cómo escalar y apalancar con IA sin romper lo que funciona.' },
+  { min: 0,  max: 40,  titulo: 'Todo depende de ti.',      texto: 'Tu operación funciona por tu esfuerzo, no por un sistema. Tiene techo — y ese techo eres tú.' },
+  { min: 41, max: 70,  titulo: 'Sistema a medias.',        texto: 'Ya montaste piezas, pero quedan huecos que te cuestan tiempo, margen o clientes.' },
+  { min: 71, max: 100, titulo: 'Operación sistematizada.', texto: 'Vas bien. La conversación aquí es cómo escalar y apalancar con IA sin romper lo que ya funciona.' },
 ];
 
 /* -------- Estado -------- */
@@ -82,7 +86,7 @@ function pantallaIntro() {
   const c = el(`<div class="paso">
     <span class="eyebrow">Autodiagnóstico</span>
     <h1>¿Tu operación es un sistema… o eres tú?</h1>
-    <p class="sub">Doce preguntas, tres o cuatro minutos. Al final: tu puntaje, tus 3 huecos y una acción por hueco. Sin humo.</p>
+    <p class="sub">Dieciséis preguntas, cuatro minutos. Al final: tu puntaje, tus 3 huecos y una acción concreta por hueco. Sin humo.</p>
     <p class="q-label">Para empezar — ¿qué describe mejor lo tuyo?</p>
     <div class="opciones" id="segs"></div>
   </div>`);
