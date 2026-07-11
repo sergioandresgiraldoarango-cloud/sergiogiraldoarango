@@ -4,14 +4,18 @@
 [build]
   publish = "."
 
+# Por defecto: revalidar siempre (ETag → 304 si no cambió). Así los cambios de
+# HTML/JS/CSS/imágenes se ven apenas se despliega, sin caché viejo pegado.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
+# Solo las fuentes (nunca cambian) van con caché largo inmutable.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
