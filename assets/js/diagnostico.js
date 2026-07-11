@@ -297,9 +297,31 @@ function pantallaResultado() {
   c.querySelector('#captura').appendChild(pantallaCaptura(total, dim, oportunidad));
 }
 
-/* -------- Captura (Modo B) + lead-score interno --------
-   Habeas data: casilla NO premarcada + enlaces a políticas. */
+/* -------- Reward en pantalla (Modo A · ACTIVO hoy) --------
+   Entrega la plantilla directo + CTA. NO captura datos (habeas data pendiente)
+   ni envía correo (Modo B / n8n pendiente). Honesto: no promete un correo que no sale. */
 function pantallaCaptura(total, dim, oportunidad) {
+  return el(`<div class="captura-box">
+    <span class="mono" style="font-size:0.7rem;letter-spacing:0.14em;color:var(--laton)">TU REGALO</span>
+    <h2>La plantilla real que uso para producir</h2>
+    <p class="sub">Descárgala y úsala hoy: checklist por fases, cronograma, control de proveedores y cierre financiero con el margen calculado solo.</p>
+    <a class="btn btn--laton" href="/assets/plantilla-produccion-eventos.xlsx" download>Descargar la plantilla</a>
+    <div class="cta-diag">
+      <p>¿Quieres que revisemos tus huecos juntos?</p>
+      <a class="btn btn--line" href="/#contacto">Diagnóstico de Operación →</a>
+      <div style="height:12px"></div>
+      <a class="link-arrow" href="https://wa.me/573154701001" target="_blank" rel="noopener">O escríbeme por WhatsApp →</a>
+    </div>
+  </div>`);
+}
+
+/* -------- Captura Modo B (formulario + lead-score) · PREPARADO, NO ACTIVO --------
+   Se enciende cuando: (1) el abogado valide el habeas data y (2) se conecte n8n
+   (formulario → n8n → Notion → correo con informe + secuencia de 3 correos).
+   Para activarlo: llamar capturaModoB(...) en vez de pantallaCaptura(...) arriba, y
+   agregar en autodiagnostico.html un formulario estático oculto con estos mismos
+   name= para que Netlify (o n8n) lo detecte. */
+function capturaModoB(total, dim, oportunidad) {
   const dimsStr = DIMS.map(d => `${d}:${dim[d]}`).join(',');
   const box = el(`<div class="captura-box">
     <h2>Recibe tu informe + la plantilla real de producción</h2>
