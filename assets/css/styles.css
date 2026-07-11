@@ -1,0 +1,311 @@
+/* ============================================================
+   sergioandresgiraldoarango.com — sistema de estilos
+   Identidad: "estructura sobre la noche" (IDENTIDAD-VISUAL.md)
+   Carbón + latón escaso · Archivo / Inter / JetBrains Mono
+   ============================================================ */
+
+:root {
+  /* Paleta (IDENTIDAD-VISUAL.md §3) */
+  --carbon:        #141414;
+  --grafito:       #212121;
+  --grafito-claro: #333333;
+  --crema:         #F2EDE4;
+  --piedra:        #A39C90;
+  --laton:         #C99A3F;
+  --laton-claro:   #E0B45C;
+
+  /* Superficie cálida para el bloque del test */
+  --carbon-calido: #1a1611;
+
+  /* Tipografía */
+  --f-titular: 'Archivo', system-ui, sans-serif;
+  --f-cuerpo:  'Inter', system-ui, sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --radio: 10px;
+  --ancho: 1080px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  background: var(--carbon);
+  color: var(--crema);
+  font-family: var(--f-cuerpo);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--laton); color: var(--carbon); }
+
+a { color: inherit; text-decoration: none; }
+
+img { max-width: 100%; display: block; }
+
+/* ---------- Tipografía base ---------- */
+h1, h2, h3 {
+  font-family: var(--f-titular);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.mono {
+  font-family: var(--f-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.acento { color: var(--laton); }
+
+/* Etiqueta de sección (mono, piedra) */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--piedra);
+  margin-bottom: 1.1rem;
+  display: block;
+}
+
+/* ---------- Monograma SGA vertical superpuesto ----------
+   Letras encimadas verticalmente; halo en carbón (paint-order:stroke)
+   que abre el cruce para diferenciarlas. G en latón. */
+.mono-mark { position: relative; flex: 0 0 auto; font-family: var(--f-titular); font-weight: 900; }
+.mono-mark span { position: absolute; left: 0; right: 0; text-align: center; line-height: 1; paint-order: stroke; -webkit-text-stroke: 4px var(--carbon); }
+.mono-mark .m-s { color: var(--crema); }
+.mono-mark .m-g { color: var(--laton); }
+.mono-mark .m-a { color: var(--crema); }
+/* Tamaño header (compacto). Solapamiento ~1/3 (como la muestra aprobada):
+   el offset entre letras ≈ 0.46 del tamaño de fuente, para que la S y la G se vean. */
+.mono-mark--sm { width: 24px; height: 50px; }
+.mono-mark--sm span { font-size: 26px; -webkit-text-stroke-width: 3.5px; }
+.mono-mark--sm .m-s { top: 0; }
+.mono-mark--sm .m-g { top: 12px; }
+.mono-mark--sm .m-a { top: 24px; }
+
+/* ---------- Los 4 puntos (símbolo de marca) ---------- */
+.dots {
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+  vertical-align: middle;
+}
+.dots span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--laton);
+}
+.dots--sm span { width: 4px; height: 4px; }
+
+/* ---------- Layout ---------- */
+.wrap { width: 100%; max-width: var(--ancho); margin: 0 auto; padding: 0 1.4rem; }
+
+section { padding: 4.5rem 0; border-top: 1px solid var(--grafito-claro); }
+section:first-of-type { border-top: 0; }
+
+@media (min-width: 760px) {
+  section { padding: 6.5rem 0; }
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(20, 20, 20, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--grafito-claro);
+}
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-size: 1rem; letter-spacing: 0.01em; }
+.brand .name { color: var(--crema); }
+
+.nav-links { display: none; align-items: center; gap: 1.8rem; }
+.nav-links a { color: var(--piedra); font-size: 0.9rem; transition: color .18s; }
+.nav-links a:hover { color: var(--crema); }
+
+@media (min-width: 860px) { .nav-links { display: flex; } }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--f-cuerpo); font-weight: 500; font-size: 0.95rem;
+  padding: 0.8rem 1.5rem; border-radius: var(--radio);
+  cursor: pointer; border: 1px solid transparent;
+  transition: background .18s, border-color .18s, color .18s, transform .05s;
+  text-align: center;
+}
+.btn:active { transform: scale(0.985); }
+
+.btn--laton { background: var(--laton); color: var(--carbon); }
+.btn--laton:hover { background: var(--laton-claro); }
+
+.btn--ghost { background: transparent; color: var(--crema); border-color: var(--grafito-claro); }
+.btn--ghost:hover { border-color: var(--piedra); }
+
+.btn--line { background: transparent; color: var(--laton); border-color: var(--laton); }
+.btn--line:hover { background: var(--laton); color: var(--carbon); }
+
+.btn--sm { padding: 0.55rem 1rem; font-size: 0.85rem; }
+
+.link-arrow { color: var(--laton); font-weight: 500; display: inline-flex; gap: 6px; align-items: center; }
+.link-arrow:hover { color: var(--laton-claro); }
+
+/* ---------- Hero ---------- */
+.hero { padding-top: 3.5rem; }
+.hero h1 {
+  font-size: clamp(2.1rem, 6.2vw, 4rem);
+  max-width: 16ch;
+  margin: 0.6rem 0 1.3rem;
+}
+.hero .sub {
+  color: var(--piedra); font-size: 1.1rem; max-width: 46ch; margin-bottom: 2.2rem;
+}
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
+
+/* Marca de agua de puntos */
+.hero { position: relative; }
+.hero .watermark {
+  position: absolute; top: 2rem; right: -1rem; opacity: 0.5;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+  pointer-events: none;
+}
+.hero .watermark span { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--grafito-claro); }
+@media (max-width: 640px) { .hero .watermark { display: none; } }
+
+/* ---------- Franja de prueba ---------- */
+.proof { padding: 2.6rem 0; }
+.proof-stats {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 1rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 640px) { .proof-stats { grid-template-columns: repeat(4, 1fr); } }
+.stat .num { font-family: var(--f-mono); font-size: 1.9rem; color: var(--laton); line-height: 1; }
+.stat .lbl { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--piedra); margin-top: 0.5rem; }
+.logos {
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: center;
+  color: var(--piedra); font-size: 0.82rem; padding-top: 1.6rem; border-top: 1px solid var(--grafito-claro);
+}
+.logos span { opacity: 0.75; }
+
+/* ---------- Bloques de texto ancla (manifiesto/método) ---------- */
+.lead { font-size: clamp(1.35rem, 3.4vw, 1.9rem); font-family: var(--f-titular); font-weight: 600; letter-spacing: -0.02em; line-height: 1.32; max-width: 24ch; }
+.manifiesto blockquote { max-width: 30ch; }
+.manifiesto p { color: var(--crema); font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.4; margin-bottom: 1.2rem; }
+.manifiesto .firma { color: var(--piedra); font-size: 0.95rem; margin-top: 1.8rem; }
+
+.creo-list { list-style: none; max-width: 42ch; margin-top: 0.5rem; }
+.creo-list li {
+  padding: 1rem 0; border-bottom: 1px solid var(--grafito-claro);
+  font-size: 1.12rem; display: flex; gap: 0.9rem; align-items: baseline;
+}
+.creo-list li::before { content: ""; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--laton); transform: translateY(-2px); }
+
+/* ---------- Grid genérico ---------- */
+.section-head { max-width: 60ch; margin-bottom: 2.6rem; }
+.section-head h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); }
+.section-head p { color: var(--piedra); margin-top: 0.9rem; font-size: 1.05rem; }
+
+/* ---------- Ofertas ---------- */
+.tier { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--laton); margin-bottom: 1.2rem; display: block; }
+.cards { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 760px) { .cards--3 { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  background: var(--grafito); border: 1px solid var(--grafito-claro);
+  border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;
+}
+.card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+.card .desc { color: var(--piedra); font-size: 0.95rem; flex: 1; }
+.card .price { font-family: var(--f-mono); font-size: 0.9rem; color: var(--laton); margin: 1.1rem 0; letter-spacing: 0.02em; }
+.card .btn { margin-top: auto; }
+
+.muestra {
+  margin-top: 1.6rem; padding: 1.3rem 1.5rem; border: 1px dashed var(--grafito-claro);
+  border-radius: 12px; color: var(--piedra); font-size: 0.92rem;
+}
+.muestra strong { color: var(--crema); font-weight: 500; }
+
+/* ---------- Proyectos ---------- */
+.proj-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+@media (min-width: 760px) { .proj-grid { grid-template-columns: repeat(4, 1fr); } }
+.proj {
+  background: var(--grafito); border: 1px solid var(--grafito-claro);
+  border-radius: 10px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem;
+  transition: border-color .18s, transform .12s;
+}
+.proj:hover { border-color: var(--laton); transform: translateY(-2px); }
+.proj .pname { font-weight: 500; font-size: 0.98rem; }
+.proj .pwhat { color: var(--piedra); font-size: 0.8rem; flex: 1; }
+.proj .pstate { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; }
+.pstate.vivo { color: #7FBF7F; }
+.pstate.piloto { color: var(--laton); }
+.pstate.constr { color: var(--piedra); }
+
+/* ---------- Bloque autodiagnóstico ---------- */
+.diag-block {
+  background: var(--carbon-calido);
+  border: 1px solid var(--grafito-claro);
+  border-radius: 16px; padding: 2.4rem;
+}
+.diag-block h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); max-width: 18ch; }
+.diag-bullets { list-style: none; display: grid; gap: 0.7rem; margin: 1.5rem 0; }
+.diag-bullets li { display: flex; gap: 0.7rem; align-items: center; color: var(--crema); }
+.diag-bullets li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--laton); flex: 0 0 auto; }
+.diag-block .meta { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--piedra); }
+
+/* ---------- Historia ---------- */
+.arco { display: grid; gap: 0.9rem; max-width: 52ch; }
+.arco .hito { display: flex; gap: 1rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid var(--grafito-claro); }
+.arco .hito .n { font-family: var(--f-mono); color: var(--laton); font-size: 0.85rem; flex: 0 0 auto; }
+.arco .hito .t { font-size: 1.05rem; }
+
+/* ---------- Contacto ---------- */
+.contacto h2 { font-size: clamp(1.8rem, 4.5vw, 2.8rem); max-width: 20ch; }
+.contacto .cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+.contacto .directo { margin-top: 1.6rem; color: var(--piedra); font-size: 0.95rem; }
+.contacto .directo a { color: var(--laton); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--grafito-claro); padding: 3rem 0; color: var(--piedra); font-size: 0.88rem; }
+.site-footer .top { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.site-footer .flinks { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.site-footer .flinks a:hover { color: var(--crema); }
+.site-footer .legal { display: flex; flex-wrap: wrap; gap: 1.2rem; padding-top: 1.5rem; border-top: 1px solid var(--grafito-claro); }
+.site-footer .fine { margin-top: 1rem; font-size: 0.8rem; opacity: 0.85; }
+.site-footer .sign { font-family: var(--f-mono); letter-spacing: 0.2em; color: var(--laton); margin-top: 0.6rem; }
+
+/* ---------- Páginas de lectura (manifiesto, legales, gracias) ---------- */
+.page { padding: 3.5rem 0 5rem; }
+.page .wrap { max-width: 720px; }
+.page .back { color: var(--piedra); font-size: 0.9rem; display: inline-flex; gap: 6px; margin-bottom: 2rem; }
+.page .back:hover { color: var(--crema); }
+.page h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin-bottom: 0.6rem; }
+.page .meta { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--piedra); margin-bottom: 2.5rem; }
+.prose p { font-size: 1.12rem; line-height: 1.75; margin-bottom: 1.3rem; color: var(--crema); }
+.prose p.dim { color: var(--piedra); }
+.prose h2 { font-size: 1.4rem; margin: 2.4rem 0 1rem; }
+.prose h3 { font-size: 1.1rem; margin: 1.8rem 0 0.6rem; color: var(--laton); }
+.prose ul { margin: 0 0 1.3rem 1.2rem; }
+.prose li { margin-bottom: 0.5rem; line-height: 1.6; }
+.prose hr { border: 0; border-top: 1px solid var(--grafito-claro); margin: 2.4rem 0; }
+.prose .big { font-family: var(--f-titular); font-weight: 600; font-size: clamp(1.3rem, 3.4vw, 1.8rem); line-height: 1.4; letter-spacing: -0.01em; }
+.prose .firma { font-family: var(--f-mono); letter-spacing: 0.12em; color: var(--laton); margin-top: 2rem; }
+.aviso-borrador { background: var(--carbon-calido); border: 1px solid var(--laton); border-radius: 10px; padding: 1rem 1.2rem; color: var(--laton-claro); font-size: 0.9rem; margin-bottom: 2.5rem; }
+.gracias { text-align: center; padding: 6rem 0; }
+.gracias .dots { transform: scale(1.6); margin-bottom: 2rem; }
+.gracias h1 { font-size: clamp(2rem, 7vw, 3.4rem); }
+.gracias p { color: var(--piedra); font-size: 1.1rem; max-width: 40ch; margin: 1rem auto 2.2rem; }
+
+/* ---------- Utilidades ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+:focus-visible { outline: 2px solid var(--laton); outline-offset: 3px; }
+.spacer { height: 1.5rem; }

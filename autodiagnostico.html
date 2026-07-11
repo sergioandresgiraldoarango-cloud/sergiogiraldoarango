@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodiagnóstico · ¿Tu operación es un sistema… o eres tú? — Sergio Giraldo</title>
+<meta name="description" content="Test de 3-4 minutos: descubre qué tan sistematizada está tu operación, tus 3 huecos principales y una acción concreta para cada uno.">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<style>
+  .diag-shell { min-height: 100vh; display: flex; flex-direction: column; }
+  .diag-main { flex: 1; display: flex; align-items: flex-start; }
+  .diag-main .wrap { width: 100%; max-width: 680px; padding-top: 3rem; padding-bottom: 4rem; }
+  .paso h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); margin: 0.5rem 0 1rem; max-width: 18ch; }
+  .paso .sub { color: var(--piedra); font-size: 1.05rem; max-width: 48ch; margin-bottom: 2rem; }
+  .q-label { color: var(--crema); font-weight: 500; margin-bottom: 1.2rem; }
+  .q-label.grande { font-family: var(--f-titular); font-weight: 600; font-size: clamp(1.3rem, 4vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em; max-width: 24ch; }
+  .opciones { display: grid; gap: 0.7rem; }
+  .opcion {
+    text-align: left; background: var(--grafito); color: var(--crema);
+    border: 1px solid var(--grafito-claro); border-radius: 10px;
+    padding: 1rem 1.2rem; font-family: var(--f-cuerpo); font-size: 1rem; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .opcion:hover { border-color: var(--laton); }
+  .opcion.sel { border-color: var(--laton); background: var(--carbon-calido); }
+  .progress { height: 3px; background: var(--grafito-claro); border-radius: 3px; overflow: hidden; margin-bottom: 1.6rem; }
+  .progress span { display: block; height: 100%; background: var(--laton); transition: width .3s ease; }
+  .contador { font-size: 0.72rem; color: var(--piedra); margin-bottom: 1rem; }
+  .volver { margin-top: 1.4rem; background: none; border: 0; color: var(--piedra); font-family: var(--f-cuerpo); font-size: 0.9rem; cursor: pointer; }
+  .volver:hover { color: var(--crema); }
+
+  .resultado .score { display: flex; align-items: baseline; gap: 6px; margin: 0.4rem 0; }
+  .score-num { font-size: clamp(3rem, 12vw, 5rem); color: var(--laton); line-height: 1; }
+  .score-max { font-size: 1.4rem; color: var(--piedra); }
+  .huecos-titulo { font-size: 1.3rem; margin: 2.5rem 0 1.2rem; }
+  .huecos { display: grid; gap: 0.9rem; }
+  .hueco { background: var(--grafito); border: 1px solid var(--grafito-claro); border-left: 3px solid var(--laton); border-radius: 0 10px 10px 0; padding: 1.3rem 1.4rem; }
+  .hueco-top { display: flex; gap: 0.7rem; align-items: baseline; margin-bottom: 0.6rem; }
+  .hueco-n { color: var(--laton); font-size: 0.8rem; }
+  .hueco-nombre { font-weight: 500; }
+  .hueco-pts { color: var(--piedra); font-size: 0.75rem; }
+  .hueco-desc { color: var(--piedra); margin-bottom: 0.7rem; }
+  .hueco-accion { font-size: 0.98rem; }
+
+  .captura-box { margin-top: 2.6rem; padding-top: 2.2rem; border-top: 1px solid var(--grafito-claro); }
+  .captura-box h2 { font-size: 1.4rem; max-width: 22ch; }
+  .form { display: grid; gap: 1rem; margin-top: 1.6rem; max-width: 440px; }
+  .campo { display: grid; gap: 0.35rem; }
+  .campo label { font-size: 0.82rem; color: var(--piedra); }
+  .campo input {
+    background: var(--carbon); border: 1px solid var(--grafito-claro); border-radius: 8px;
+    padding: 0.75rem 0.9rem; color: var(--crema); font-family: var(--f-cuerpo); font-size: 1rem;
+  }
+  .campo input:focus { outline: none; border-color: var(--laton); }
+  .check { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.85rem; color: var(--piedra); line-height: 1.5; }
+  .check input { margin-top: 3px; accent-color: var(--laton); flex: 0 0 auto; }
+  .check a { color: var(--laton); }
+  .hp { position: absolute; left: -5000px; }
+  .cta-diag { margin-top: 2.4rem; padding: 1.5rem; background: var(--carbon-calido); border: 1px solid var(--grafito-claro); border-radius: 12px; }
+  .cta-diag p { margin-bottom: 1rem; font-family: var(--f-titular); font-weight: 600; font-size: 1.2rem; }
+</style>
+</head>
+<body>
+<div class="diag-shell">
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Sergio Giraldo — inicio">
+        <span class="dots" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="name">sergio giraldo</span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="/#manifiesto">Manifiesto</a>
+        <a href="/#ofertas">Cómo trabajo</a>
+        <a href="/#proyectos">Proyectos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="diag-main">
+    <div class="wrap">
+      <div id="app" aria-live="polite"><noscript><p>Este autodiagnóstico necesita JavaScript activado.</p></noscript></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="fine">Sergio Andrés Giraldo Arango · Manizales, Caldas · SAGA Group Foundation entrega y factura.</p>
+      <div class="legal"><a href="/privacidad.html">Privacidad</a><a href="/tratamiento-de-datos.html">Tratamiento de datos</a></div>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/diagnostico.js"></script>
+</body>
+</html>

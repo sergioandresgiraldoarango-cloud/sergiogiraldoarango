@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 210" width="150" height="210" role="img" aria-label="Monograma SGA">
+  <!-- Monograma SGA vertical superpuesto · marca personal Sergio Giraldo.
+       Letras encimadas con halo en carbón que abre el cruce · G en latón.
+       NOTA: usa la fuente Archivo. Para impresión/favicon, convertir el texto a
+       trazos (outline) en el vector/Canva; en pantalla renderiza si Archivo está cargada. -->
+  <style>
+    .m { font-family: 'Archivo', system-ui, sans-serif; font-weight: 900; font-size: 112px; text-anchor: middle; paint-order: stroke; stroke: #141414; stroke-width: 7px; }
+  </style>
+  <text class="m" x="75" y="92"  fill="#F2EDE4">S</text>
+  <text class="m" x="75" y="144" fill="#C99A3F">G</text>
+  <text class="m" x="75" y="196" fill="#F2EDE4">A</text>
+</svg>
