@@ -85,7 +85,7 @@ h1, h2, h3 {
 /* Tamaño header (compacto). Solapamiento ~1/3 (como la muestra aprobada):
    el offset entre letras ≈ 0.46 del tamaño de fuente, para que la S y la G se vean. */
 .mono-mark--sm { width: 24px; height: 50px; }
-.mono-mark--sm span { font-size: 26px; -webkit-text-stroke-width: 3.5px; }
+.mono-mark--sm span { font-size: 26px; -webkit-text-stroke-width: 2px; }
 .mono-mark--sm .m-s { top: 0; }
 .mono-mark--sm .m-g { top: 12px; }
 .mono-mark--sm .m-a { top: 24px; }
