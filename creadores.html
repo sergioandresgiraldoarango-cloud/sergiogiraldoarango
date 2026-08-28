@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sergio Giraldo · Convierto la audiencia de creadores en ingresos</title>
+<meta name="description" content="Diseño y opero el lanzamiento completo de creadores de contenido: investigación de audiencia, oferta, narrativa, calentamiento y monetización. Cobro solo un porcentaje de lo que entre.">
+<meta name="author" content="Sergio Andrés Giraldo Arango">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sergio Giraldo · De audiencia a caja">
+<meta property="og:description" content="Tu audiencia ya está. Falta el sistema que la convierte en caja. Tú grabas, yo respondo por el resultado — y cobro solo si vendes.">
+<meta property="og:url" content="https://sergioandresgiraldoarango.com/creadores.html">
+<meta property="og:image" content="https://sergioandresgiraldoarango.com/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/styles.css">
+
+<style>
+  /* Piezas propias de esta página. Todo sale de las variables de styles.css. */
+
+  .lead { color: var(--piedra); font-size: 1.08rem; max-width: 56ch; }
+  .lead b { color: var(--crema); font-weight: 600; }
+
+  .micro {
+    font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.06em;
+    color: var(--piedra); opacity: 0.72; line-height: 1.7; max-width: 62ch;
+    text-transform: uppercase; margin-top: 1.6rem;
+  }
+
+  /* --- barras del problema --- */
+  .comparador { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.4rem; max-width: 660px; }
+  .col-graf h3 {
+    font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--piedra); margin-bottom: 1rem; font-weight: 500;
+  }
+  .barras { display: flex; align-items: flex-end; gap: 0.5rem; height: 140px; }
+  .barras span { flex: 1; background: var(--grafito-claro); border-radius: 2px 2px 0 0; }
+  .barras.sube span:nth-child(1){height:28%} .barras.sube span:nth-child(2){height:44%}
+  .barras.sube span:nth-child(3){height:58%} .barras.sube span:nth-child(4){height:78%}
+  .barras.sube span:nth-child(5){height:100%; background: var(--piedra);}
+  .barras.plana span { height: 16%; }
+  .barras.plana span:nth-child(5){ height: 19%; background: #8C4128; }
+  .pie-graf {
+    font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.1em;
+    color: var(--piedra); margin-top: 0.8rem; text-transform: uppercase;
+  }
+
+  /* --- calculadora --- */
+  .calc {
+    display: grid; grid-template-columns: minmax(240px,1fr) minmax(280px,1fr);
+    gap: 2.4rem; align-items: start;
+    background: var(--carbon-calido); border: 1px solid var(--grafito-claro);
+    border-radius: var(--radio); padding: 2rem;
+  }
+  .campo { margin-bottom: 1.5rem; }
+  .campo label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--piedra); margin-bottom: 0.6rem;
+  }
+  .campo label b { font-size: 1.05rem; color: var(--crema); font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+  .calc input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 2px;
+    background: var(--grafito-claro); border-radius: 2px; outline: none;
+  }
+  .calc input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px; background: var(--laton);
+    border-radius: 50%; cursor: pointer; border: none;
+  }
+  .calc input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px; background: var(--laton); border-radius: 50%; cursor: pointer; border: none;
+  }
+  .panel .fila {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--grafito);
+  }
+  .panel .fila span { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--piedra); }
+  .panel .fila b { font-family: var(--f-mono); font-size: 1rem; color: var(--crema); font-variant-numeric: tabular-nums; font-weight: 500; }
+  .resultado { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--grafito-claro); }
+  .resultado .rot { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--piedra); display: block; margin-bottom: 0.4rem; }
+  .resultado .grande {
+    font-family: var(--f-mono); font-weight: 700; font-size: clamp(1.9rem,5vw,2.7rem);
+    line-height: 1; color: var(--laton); font-variant-numeric: tabular-nums; display: block;
+  }
+  .reparto { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1.2rem; }
+  .reparto div { background: var(--grafito); padding: 0.8rem 0.9rem; border-radius: 6px; }
+  .reparto .q { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--piedra); display: block; margin-bottom: 0.3rem; }
+  .reparto .v { font-family: var(--f-mono); font-size: 1.05rem; color: var(--crema); font-variant-numeric: tabular-nums; }
+
+  /* --- cifras del acuerdo --- */
+  .cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 1.6rem; }
+  .cifra-b { border-top: 1px solid var(--grafito-claro); padding-top: 1.2rem; }
+  .cifra-b .num {
+    font-family: var(--f-titular); font-weight: 900; font-size: clamp(2.8rem,8vw,4.4rem);
+    line-height: 0.9; letter-spacing: -0.04em; display: block; margin-bottom: 0.7rem;
+  }
+  .cifra-b.acento-n .num { color: var(--laton); }
+  .cifra-b p { color: var(--piedra); font-size: 0.93rem; max-width: 34ch; }
+
+  /* --- mapa de fases --- */
+  .mapa { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px,1fr)); gap: 0.7rem; }
+  .nodo { background: var(--grafito); border: 1px solid var(--grafito-claro); border-radius: 8px; padding: 1.1rem 1rem; }
+  .nodo .f { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; color: var(--piedra); display: block; margin-bottom: 0.55rem; }
+  .nodo strong { font-family: var(--f-titular); font-size: 1rem; display: block; line-height: 1.2; margin-bottom: 0.35rem; }
+  .nodo em { font-style: normal; color: var(--piedra); font-size: 0.8rem; line-height: 1.4; display: block; }
+  .nodo.fin { border-color: var(--laton); }
+  .nodo.fin strong { color: var(--laton); }
+
+  /* --- calendario --- */
+  .cal { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px,1fr)); gap: 0.45rem; }
+  .d { background: var(--grafito); border: 1px solid var(--grafito-claro); border-radius: 8px; padding: 0.7rem 0.6rem; min-height: 98px; }
+  .d .n { font-family: var(--f-mono); font-size: 0.66rem; color: var(--piedra); display: block; margin-bottom: 0.4rem; }
+  .d .t { font-size: 0.78rem; color: var(--piedra); line-height: 1.35; }
+  .d.hoy { border-color: var(--laton); background: var(--carbon-calido); }
+  .d.hoy .n { color: var(--laton); }
+  .d.hoy .t { color: var(--crema); }
+
+  /* --- embudo --- */
+  .emb { display: grid; gap: 0.5rem; max-width: 640px; }
+  .tramo { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; }
+  .tramo .relleno {
+    height: 46px; background: var(--grafito); border: 1px solid var(--grafito-claro);
+    border-radius: 8px; display: flex; align-items: center; padding: 0 1rem;
+    font-size: 0.92rem; color: var(--crema);
+  }
+  .tramo:nth-child(1) .relleno { width: 100%; }
+  .tramo:nth-child(2) .relleno { width: 76%; }
+  .tramo:nth-child(3) .relleno { width: 54%; }
+  .tramo:nth-child(4) .relleno { width: 36%; border-color: var(--laton); background: var(--carbon-calido); }
+  .tramo .lb { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--piedra); text-transform: uppercase; white-space: nowrap; }
+  .tramo:nth-child(4) .lb { color: var(--laton); }
+
+  /* --- reparto tú / yo --- */
+  .balanza { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); gap: 1rem; }
+  .lado { background: var(--grafito); border: 1px solid var(--grafito-claro); border-radius: var(--radio); padding: 1.6rem; }
+  .lado.mio { border-color: var(--laton); }
+  .lado .quien { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--piedra); display: block; margin-bottom: 1rem; }
+  .lado.mio .quien { color: var(--laton); }
+  .lado ul { list-style: none; display: grid; gap: 0.6rem; }
+  .lado li { font-size: 0.92rem; color: var(--piedra); padding-left: 1.1rem; position: relative; }
+  .lado li::before { content: ""; position: absolute; left: 0; top: 0.58em; width: 5px; height: 5px; background: var(--grafito-claro); border-radius: 1px; }
+  .horas { margin-top: 1.3rem; padding-top: 1rem; border-top: 1px solid var(--grafito-claro); font-family: var(--f-mono); font-size: 0.74rem; color: var(--crema); }
+
+  /* --- línea de semanas --- */
+  .linea { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 0.6rem; }
+  .sem { border-top: 2px solid var(--grafito-claro); padding-top: 0.9rem; }
+  .sem.final { border-top-color: var(--laton); }
+  .sem .w { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--piedra); display: block; margin-bottom: 0.5rem; }
+  .sem .e { font-size: 0.88rem; color: var(--crema); line-height: 1.35; }
+  .sem .m { display: block; font-size: 0.75rem; color: var(--piedra); margin-top: 0.4rem; }
+
+  /* --- filtro --- */
+  .filtro { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 2rem; }
+  .filtro h3 { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
+  .filtro .no h3 { color: #B4542F; }
+  .filtro .si h3 { color: var(--laton); }
+  .filtro ul { list-style: none; display: grid; gap: 0.65rem; }
+  .filtro li { font-size: 0.92rem; color: var(--piedra); padding-left: 1.1rem; position: relative; }
+  .filtro li::before { content: ""; position: absolute; left: 0; top: 0.56em; width: 5px; height: 5px; border-radius: 1px; }
+  .filtro .no li::before { background: #B4542F; }
+  .filtro .si li::before { background: var(--laton); }
+
+  @media (max-width: 760px) {
+    .comparador { grid-template-columns: 1fr; gap: 1.6rem; }
+    .calc { grid-template-columns: 1fr; gap: 1.6rem; padding: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Sergio Giraldo — inicio">
+      <span class="mono-mark mono-mark--sm" aria-hidden="true"><span class="m-s">S</span><span class="m-g">G</span><span class="m-a">A</span></span>
+      <span class="name">sergio giraldo</span>
+    </a>
+    <nav class="nav-links" aria-label="Navegación principal">
+      <a href="/#manifiesto">Manifiesto</a>
+      <a href="/#ofertas">Cómo trabajo</a>
+      <a href="/#proyectos">Proyectos</a>
+      <a class="btn btn--laton btn--sm" href="https://wa.me/573154701001?text=Hola%20Sergio.%20Vi%20tu%20propuesta%20para%20creadores%20y%20quiero%20agendar%20la%20llamada%20de%2040%20minutos." target="_blank" rel="noopener">Agendar llamada</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div class="watermark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <span class="eyebrow">Para creadores de contenido</span>
+      <h1>Tu audiencia ya está. Falta convertirla en <span class="acento">caja</span>.</h1>
+      <p class="sub">Diseño y opero tu lanzamiento completo: investigo a tu comprador, construyo la oferta, escribo la narrativa, dirijo el calentamiento y monto la venta. <b>Tú grabas. Yo respondo por el resultado.</b></p>
+      <div class="cta-row">
+        <a class="btn btn--laton" href="https://wa.me/573154701001?text=Hola%20Sergio.%20Vi%20tu%20propuesta%20para%20creadores%20y%20quiero%20agendar%20la%20llamada%20de%2040%20minutos." target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        <a class="btn btn--ghost" href="#calculadora">Hacer la cuenta primero</a>
+      </div>
+      <p class="micro">10 años · más de 100 eventos · Feria de Manizales · Café de Colombia · Industria Licorera de Caldas · MotoFest</p>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section id="problema">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">01 · El problema</span>
+        <h2>Publicar más no arregla esto.</h2>
+        <p>Audiencia y ventas son dos curvas distintas. La segunda no sube por volumen: sube por estructura.</p>
+      </div>
+      <div class="comparador">
+        <div class="col-graf">
+          <h3>Tu audiencia</h3>
+          <div class="barras sube"><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="pie-graf">Crece</p>
+        </div>
+        <div class="col-graf">
+          <h3>Tus ingresos</h3>
+          <div class="barras plana"><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="pie-graf">No se mueve</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULADORA -->
+  <section id="calculadora">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">02 · Tu número</span>
+        <h2>Hagamos la cuenta ahora mismo.</h2>
+        <p>Mueve tus datos reales. Si el número no justifica el trabajo, prefiero decírtelo en la primera reunión y no en la sexta semana.</p>
+      </div>
+
+      <div class="calc">
+        <div>
+          <div class="campo">
+            <label for="aud">Tu audiencia <b id="v-aud">50.000</b></label>
+            <input type="range" id="aud" min="5000" max="500000" step="5000" value="50000">
+          </div>
+          <div class="campo">
+            <label for="pre">Precio del producto <b id="v-pre">$150</b></label>
+            <input type="range" id="pre" min="20" max="600" step="10" value="150">
+          </div>
+          <div class="campo">
+            <label for="esc">Escenario <b id="v-esc">Esperado</b></label>
+            <input type="range" id="esc" min="0" max="2" step="1" value="1">
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="fila"><span>Se registran</span><b id="r-reg">—</b></div>
+          <div class="fila"><span>Asisten en vivo</span><b id="r-asi">—</b></div>
+          <div class="fila"><span>Compran</span><b id="r-com">—</b></div>
+          <div class="resultado">
+            <span class="rot">Ingreso del lanzamiento</span>
+            <span class="grande" id="r-gmv">—</span>
+            <div class="reparto">
+              <div><span class="q">Para ti</span><span class="v" id="r-tu">—</span></div>
+              <div><span class="q">Para mí</span><span class="v" id="r-yo">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="micro">Proyección, no promesa. Rangos orientativos de lanzamiento orgánico. El número real depende de tu audiencia, tu oferta y la ejecución.</p>
+    </div>
+  </section>
+
+  <!-- ACUERDO -->
+  <section id="acuerdo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">03 · El acuerdo</span>
+        <h2>Si no vendes, no cobro.</h2>
+        <p>Sin anticipo y sin mensualidad. Un porcentaje de lo que realmente entre — y el dinero entra a tu cuenta, no a la mía.</p>
+      </div>
+      <div class="cifras">
+        <div class="cifra-b acento-n">
+          <span class="num">$0</span>
+          <p>Lo que pones por adelantado. El riesgo del lanzamiento lo asumo yo.</p>
+        </div>
+        <div class="cifra-b">
+          <span class="num">50/50</span>
+          <p>Sobre el ingreso real, después de comisiones de plataforma y devoluciones. Nunca sobre el bruto.</p>
+        </div>
+        <div class="cifra-b">
+          <span class="num">Tú</span>
+          <p>Cobras en tu propia cuenta y tu propio checkout. Te facturo al cierre, contra el reporte.</p>
+        </div>
+      </div>
+      <p class="micro">Aplica al lanzamiento y su segunda ola. No cobro sobre tus ventas futuras. Sin exclusividad más allá de la ventana del evento.</p>
+    </div>
+  </section>
+
+  <!-- RECORRIDO -->
+  <section id="recorrido">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">04 · El recorrido</span>
+        <h2>De no saber qué vender, a tener el dinero adentro.</h2>
+      </div>
+      <div class="mapa">
+        <div class="nodo"><span class="f">01</span><strong>Tu audiencia</strong><em>Qué le duele, en sus palabras</em></div>
+        <div class="nodo"><span class="f">02</span><strong>La oferta</strong><em>Qué vendes y por cuánto</em></div>
+        <div class="nodo"><span class="f">03</span><strong>La historia</strong><em>Por qué te creen</em></div>
+        <div class="nodo"><span class="f">04</span><strong>14 días</strong><em>Calentamiento diario</em></div>
+        <div class="nodo"><span class="f">05</span><strong>El evento</strong><em>Webinar y carrito</em></div>
+        <div class="nodo fin"><span class="f">06</span><strong>La caja</strong><em>Cierres y segunda ola</em></div>
+      </div>
+      <p class="micro">Siete semanas de punta a punta · el calendario se ajusta a la fecha del evento que definamos</p>
+    </div>
+  </section>
+
+  <!-- ANTES DEL EVENTO -->
+  <section id="antes">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">05 · Antes del evento</span>
+        <h2>Tres cosas que hay que tener listas.</h2>
+        <p>El lanzamiento se decide aquí, semanas antes de que alguien vea un anuncio.</p>
+      </div>
+      <div class="cards cards--3">
+        <div class="card">
+          <h3>Tu comprador, con nombre</h3>
+          <p class="desc">Salgo a escuchar a tu comunidad: qué le duele, qué ya intentó y qué objeción tiene antes de pagar. Con frases textuales, no con supuestos.</p>
+          <div class="price">Semana 1</div>
+        </div>
+        <div class="card">
+          <h3>Una oferta que se explica sola</h3>
+          <p class="desc">Promesa, plazo, formato, precio, garantía y prueba. Si hay que convencer de que la oferta es buena, la oferta no es buena.</p>
+          <div class="price">Semana 2</div>
+        </div>
+        <div class="card">
+          <h3>El orden en que te creen</h3>
+          <p class="desc">Nadie compra por un argumento suelto. Compra cuando ya creía cinco cosas antes de oír el precio. Ese orden lo diseño yo.</p>
+          <div class="price">Semana 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENTAMIENTO -->
+  <section id="calentamiento">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">06 · El calentamiento</span>
+        <h2>Catorce días con intención.</h2>
+        <p>Cada día trae qué contar, qué idea instalar y qué pedir. Tú solo grabas.</p>
+      </div>
+      <div class="cal">
+        <div class="d"><span class="n">D-14</span><span class="t">Quién eres y por qué hablas de esto</span></div>
+        <div class="d"><span class="n">D-12</span><span class="t">El problema con nombre propio</span></div>
+        <div class="d"><span class="n">D-10</span><span class="t">Por qué lo que intentaron falló</span></div>
+        <div class="d"><span class="n">D-8</span><span class="t">Tu punto de vista incómodo</span></div>
+        <div class="d"><span class="n">D-6</span><span class="t">Alguien que ya lo logró</span></div>
+        <div class="d"><span class="n">D-4</span><span class="t">Anuncio · abre registro</span></div>
+        <div class="d"><span class="n">D-2</span><span class="t">La objeción, resuelta en público</span></div>
+        <div class="d hoy"><span class="n">D-0</span><span class="t">Evento en vivo · abre carrito</span></div>
+      </div>
+      <p class="micro">Recibes guion o audio de referencia, lista de grabación y la llamada a la acción escrita. No tienes que redactar nada.</p>
+    </div>
+  </section>
+
+  <!-- EVENTO -->
+  <section id="evento">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">07 · El evento</span>
+        <h2>El pico emocional dura poco.</h2>
+        <p>Toda la operación de esa semana existe para que ese pico se convierta en transacciones antes de que se enfríe.</p>
+      </div>
+      <div class="emb">
+        <div class="tramo"><div class="relleno">Registrados</div><span class="lb">Calentamiento</span></div>
+        <div class="tramo"><div class="relleno">Asistentes</div><span class="lb">Recordatorios</span></div>
+        <div class="tramo"><div class="relleno">Interesados</div><span class="lb">Mesa de ventas</span></div>
+        <div class="tramo"><div class="relleno">Compradores</div><span class="lb">Cierres · 72 h</span></div>
+      </div>
+      <p class="micro">Buena parte de las ventas no ocurre durante el vivo, sino en las 72 horas siguientes. Esa parte es la que casi nadie opera.</p>
+    </div>
+  </section>
+
+  <!-- REPARTO -->
+  <section id="reparto">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">08 · El reparto</span>
+        <h2>Tú haces lo único que nadie puede hacer por ti.</h2>
+      </div>
+      <div class="balanza">
+        <div class="lado">
+          <span class="quien">Tu parte</span>
+          <ul>
+            <li>Grabar el contenido con la guía que te paso.</li>
+            <li>Presentar el evento en vivo.</li>
+            <li>Contarme lo que sabes de tu audiencia.</li>
+            <li>Estar disponible la semana de ventas.</li>
+          </ul>
+          <p class="horas">3 – 5 HORAS POR SEMANA</p>
+        </div>
+        <div class="lado mio">
+          <span class="quien">Mi parte</span>
+          <ul>
+            <li>Investigación y construcción del comprador.</li>
+            <li>Oferta, precio, garantía y mensaje.</li>
+            <li>Narrativa, calendario y guiones diarios.</li>
+            <li>Webinar, mesa de ventas y cierres.</li>
+            <li>Medición, ajustes y diagnóstico final.</li>
+          </ul>
+          <p class="horas">TODA LA OPERACIÓN</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTREGABLES -->
+  <section id="entregables">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">09 · Entregables</span>
+        <h2>Cada semana cierra con algo en tus manos.</h2>
+        <p>Y con un número que se revisa en su momento. Si un tramo se cae, se corrige esa semana.</p>
+      </div>
+      <div class="linea">
+        <div class="sem"><span class="w">SEMANA 1</span><span class="e">Tu comprador y sus objeciones<span class="m">Medimos: respuestas útiles recogidas</span></span></div>
+        <div class="sem"><span class="w">SEMANA 2</span><span class="e">La oferta cerrada<span class="m">Medimos: encaje con el avatar</span></span></div>
+        <div class="sem"><span class="w">SEMANA 3</span><span class="e">Narrativa y mapa<span class="m">Medimos: reacción a la promesa</span></span></div>
+        <div class="sem"><span class="w">SEMANAS 4-5</span><span class="e">Calendario y guiones<span class="m">Medimos: ritmo de registros</span></span></div>
+        <div class="sem"><span class="w">SEMANA 6</span><span class="e">Evento y operación de ventas<span class="m">Medimos: asistencia y conversión</span></span></div>
+        <div class="sem final"><span class="w">SEMANA 7</span><span class="e">Diagnóstico y plan siguiente<span class="m">Medimos: ingreso real y margen</span></span></div>
+      </div>
+      <p class="micro">No hay reporte sorpresa al final: trabajamos sobre el mismo tablero. Y todo lo construido queda tuyo.</p>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="contacto" id="contacto">
+    <div class="wrap">
+      <span class="eyebrow">10 · Trabajemos juntos</span>
+      <h2>Cuarenta minutos y tus números.</h2>
+      <div class="filtro" style="margin:2rem 0 2.4rem">
+        <div class="no">
+          <h3>No trabajamos juntos si</h3>
+          <ul>
+            <li>No quieres grabar contenido durante dos semanas.</li>
+            <li>Buscas que alguien te garantice una cifra.</li>
+            <li>No quieres hablar de dinero con tu comunidad.</li>
+          </ul>
+        </div>
+        <div class="si">
+          <h3>Sí, si</h3>
+          <ul>
+            <li>Tienes una audiencia que te escucha de verdad.</li>
+            <li>Sabes algo que a tu gente le cambiaría el año.</li>
+            <li>Prefieres un socio que cobre solo si vendes.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn--laton" href="https://wa.me/573154701001?text=Hola%20Sergio.%20Vi%20tu%20propuesta%20para%20creadores%20y%20quiero%20agendar%20la%20llamada%20de%2040%20minutos." target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        <a class="btn btn--ghost" href="mailto:ungusto@sergioandresgiraldoarango.com">Enviar un correo</a>
+      </div>
+      <p class="directo">En esa llamada hacemos la cuenta con tus datos reales. Si no da, te lo digo ahí mismo.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="top">
+      <a class="brand" href="/">
+        <span class="dots" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="name">sergio giraldo</span>
+      </a>
+      <div class="flinks">
+        <a href="https://www.linkedin.com/in/sergioandresgiraldoarango" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://wa.me/573154701001" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:ungusto@sergioandresgiraldoarango.com">ungusto@sergioandresgiraldoarango.com</a>
+      </div>
+    </div>
+    <div class="legal">
+      <a href="/privacidad.html">Privacidad</a>
+      <a href="/tratamiento-de-datos.html">Tratamiento de datos</a>
+    </div>
+    <p class="fine">Sergio Andrés Giraldo Arango · Manizales, Caldas · SAGA Group Foundation entrega y factura.</p>
+    <p class="sign">• • • •</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var ESC = [
+    { n:'Conservador', reg:0.010, asi:0.20, com:0.02 },
+    { n:'Esperado',    reg:0.020, asi:0.30, com:0.05 },
+    { n:'Optimista',   reg:0.030, asi:0.40, com:0.09 }
+  ];
+  var aud = document.getElementById('aud'),
+      pre = document.getElementById('pre'),
+      esc = document.getElementById('esc');
+  if (!aud) return;
+
+  var vAud = document.getElementById('v-aud'), vPre = document.getElementById('v-pre'), vEsc = document.getElementById('v-esc'),
+      rReg = document.getElementById('r-reg'), rAsi = document.getElementById('r-asi'), rCom = document.getElementById('r-com'),
+      rGmv = document.getElementById('r-gmv'), rTu = document.getElementById('r-tu'), rYo = document.getElementById('r-yo');
+
+  function miles(n){ return Math.round(n).toLocaleString('es-CO'); }
+  function dolares(n){ return '$' + miles(n); }
+
+  function calcular(){
+    var A = +aud.value, P = +pre.value, E = ESC[+esc.value];
+    var reg = A * E.reg, asi = reg * E.asi, com = asi * E.com, gmv = com * P;
+    vAud.textContent = miles(A);
+    vPre.textContent = dolares(P);
+    vEsc.textContent = E.n;
+    rReg.textContent = miles(reg);
+    rAsi.textContent = miles(asi);
+    rCom.textContent = miles(com);
+    rGmv.textContent = dolares(gmv);
+    rTu.textContent = dolares(gmv * 0.5);
+    rYo.textContent = dolares(gmv * 0.5);
+  }
+  [aud, pre, esc].forEach(function(el){ el.addEventListener('input', calcular); });
+  calcular();
+})();
+</script>
+
+</body>
+</html>
