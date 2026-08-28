@@ -182,13 +182,20 @@ section:first-of-type { border-top: 0; }
 
 /* Marca de agua de puntos */
 .hero { position: relative; }
+/* El watermark se ancla al .wrap, no al .hero: con .hero como ancestro posicionado su
+   `right: -1rem` lo empujaba 16px FUERA de la ventana y TODO el sitio hacia scroll
+   horizontal. Y por debajo de 1140px el .wrap ya toca los bordes de la ventana, asi que
+   ahi no puede sobresalir nada: se queda en `right: 0` y solo sobresale desde 1140px, que
+   es donde el margen lateral ya supera holgadamente 1rem incluso con barra de scroll. */
+.hero .wrap { position: relative; }
 .hero .watermark {
-  position: absolute; top: 2rem; right: -1rem; opacity: 0.5;
+  position: absolute; top: 2rem; right: 0; opacity: 0.5;
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
   pointer-events: none;
 }
 .hero .watermark span { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--grafito-claro); }
 @media (max-width: 640px) { .hero .watermark { display: none; } }
+@media (min-width: 1140px) { .hero .watermark { right: -1rem; } }
 
 /* ---------- Franja de prueba ---------- */
 .proof { padding: 2.6rem 0; }
